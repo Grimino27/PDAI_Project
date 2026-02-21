@@ -1,0 +1,50 @@
+---
+layout: base.njk
+title: Dates
+---
+
+<h1>Dates</h1>
+<p class="subtitle">{{ indices.dates.length }} dates mentioned across documents</p>
+
+<div class="search-box">
+  <input type="text" id="search" placeholder="Search dates...">
+</div>
+
+<div id="results">
+  {% for date in indices.dates %}
+  <details class="entity-item" data-name="{{ date.name }}" id="{{ date.name | slugify }}">
+    <summary class="entity-summary">
+      <span class="entity-name">{{ date.name }}</span>
+      <span class="entity-count">{{ date.count }} {{ "document" if date.count == 1 else "documents" }}</span>
+    </summary>
+    <div class="entity-content">
+      {% for doc in date.docs %}
+      <div class="document-card-compact">
+        <a href="/document/{{ doc.unique_id | slugify }}/" class="doc-link">
+          <strong>Document {{ doc.document_number }}</strong>
+        </a>
+        <div class="meta-compact">
+          {% if doc.document_metadata.document_type %}{{ doc.document_metadata.document_type }}{% endif %}
+          {% if doc.document_metadata.date %} · {{ doc.document_metadata.date }}{% endif %}
+          · {{ doc.page_count }} {{ "page" if doc.page_count == 1 else "pages" }}
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </details>
+  {% endfor %}
+</div>
+
+<script>
+  const search = document.getElementById('search');
+  const results = document.getElementById('results');
+  const allItems = results.querySelectorAll('.entity-item');
+
+  search.addEventListener('input', (e) => {
+    const query = e.target.value.toLowerCase();
+    allItems.forEach(item => {
+      const name = item.dataset.name.toLowerCase();
+      item.style.display = name.includes(query) ? 'block' : 'none';
+    });
+  });
+</script>
