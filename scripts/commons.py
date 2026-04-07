@@ -48,9 +48,9 @@ def random_forest_model_selection(train_X, train_y):
 
     grid = GridSearchCV(
             estimator=RandomForestClassifier(random_state = 42),
-            param_grid=param_grid
+            param_grid=param_grid,
             cv=StratifiedKFold(n_splits=5),
-            scoring=f1, #uso come scoring l'f1
+            scoring='f1_macro',
             n_jobs=-1,
         )
     
