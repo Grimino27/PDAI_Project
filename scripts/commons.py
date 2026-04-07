@@ -34,7 +34,7 @@ def logistic_model_selection(train_X, train_y):
 
     return grid, grid.best_params_, grid.best_score_
 
-def random_forest_model_selection(train_X, train_y):
+def random_forest_model_selection(train_X, train_y, f1):
     
     param_grid = [
         {
@@ -50,7 +50,7 @@ def random_forest_model_selection(train_X, train_y):
             estimator=RandomForestClassifier(random_state = 42),
             param_grid=param_grid,
             cv=StratifiedKFold(n_splits=5),
-            scoring='f1_macro',
+            scoring=f1,
             n_jobs=-1,
         )
     
