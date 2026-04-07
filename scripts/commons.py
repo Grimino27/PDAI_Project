@@ -35,8 +35,8 @@ def logistic_model_selection(train_X, train_y):
 
     return grid, grid.best_params_, grid.best_score_
 
-def random_forest_model_selection(train_X, train_y, f1):
-    
+def random_forest_model_selection(train_X, train_y):
+
     param_grid = [
         {
             "n_estimators": [50, 100, 150, 200],
@@ -44,14 +44,14 @@ def random_forest_model_selection(train_X, train_y, f1):
             "min_samples_split": [10],
             "min_samples_leaf": [5, 10, 20],
             "class_weight": [None, 'balanced', 'balanced_subsample'],
-        },        
+        },
     ]
 
     grid = GridSearchCV(
             estimator=RandomForestClassifier(random_state = 42),
             param_grid=param_grid,
             cv=StratifiedKFold(n_splits=5),
-            scoring=f1,
+            scoring='f1_macro',
             n_jobs=-1,
         )
     
