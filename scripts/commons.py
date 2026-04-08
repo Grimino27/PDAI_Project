@@ -137,10 +137,10 @@ def plot_logistic_coefficients(coefs, feature_names, classes, figsize_per_class=
     plt.tight_layout()
     plt.show()
 
-def plot_feature_importance(rf_model, X_columns):
+def plot_feature_importance(feat_import, X_columns):
     feature_importance = pd.DataFrame({
         'Feature': X_columns,
-        'Importance': rf_model.best_estimator_.feature_importances_
+        'Importance': feat_import
         }).sort_values('Importance', ascending=False)
     
     print("Feature Importance:")
