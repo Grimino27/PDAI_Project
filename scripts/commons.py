@@ -137,4 +137,19 @@ def plot_logistic_coefficients(coefs, feature_names, classes, figsize_per_class=
     plt.tight_layout()
     plt.show()
 
-
+def plot_feature_importance(rf_model, X_columns):
+    feature_importance = pd.DataFrame({
+        'Feature': X_columns,
+        'Importance': rf_model.best_estimator_.feature_importances_
+        }).sort_values('Importance', ascending=False)
+    
+    print("Feature Importance:")
+    print(feature_importance)
+    
+    # Grafico
+    fig, ax = plt.subplots(figsize=(10, 6))
+    feature_importance.plot(x='Feature', y='Importance', kind='barh', ax=ax, color='steelblue')
+    ax.set_title('Feature Importance nel Random Forest', fontsize=12, fontweight='bold')
+    ax.set_xlabel('Importanza')
+    plt.tight_layout()
+    plt.show()
